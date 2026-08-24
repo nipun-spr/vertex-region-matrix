@@ -190,6 +190,14 @@ await pool(Object.entries(cfg.models), CONCURRENCY, async ([model, spec], p) => 
       confidence = 'low';
       how += ' + unlabelled scan';
     }
+    /* An anchored section can be region-free even when the page isn't — the Veo
+       page lists its one region outside the per-variant sections. Widen to the
+       whole page before giving up. */
+    if (!regions && spec.anchor) {
+      const whole = await pageText(cfg._baseUrl + spec.path, null, p);
+      regions = regionsFrom(whole) || anyRegionsIn(whole);
+      if (regions) { confidence = 'low'; how = 'whole page (section had none)'; }
+    }
     if (!regions) throw new Error('no regions found anywhere on the page');
     const entry = { regions, url, confidence, readFrom: how,
                     status: prev.models?.[model]?.status || 'known' };
