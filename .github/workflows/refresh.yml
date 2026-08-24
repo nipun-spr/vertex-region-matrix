@@ -1,0 +1,40 @@
+name: Refresh Vertex region matrix
+
+on:
+  schedule:
+    - cron: '0 5 * * 1,3,5'   # Mon, Wed, Fri at 05:00 UTC (10:30 IST)
+  workflow_dispatch:          # lets you run it by hand from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1 || true
+          npm install playwright@latest
+          npx playwright install --with-deps chromium
+
+      - name: Scrape model pages
+        run: node scrape.mjs
+
+      - name: Commit regions.json if it changed
+        run: |
+          git config user.name  "region-bot"
+          git config user.email "region-bot@users.noreply.github.com"
+          if git diff --quiet regions.json; then
+            echo "No change."
+          else
+            git add regions.json
+            git commit -m "Region matrix update: $(head -c 200 changes.txt | tr '\n' ' ')"
+            git push
+          fi
