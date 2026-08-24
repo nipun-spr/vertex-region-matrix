@@ -50,6 +50,18 @@ function regionsFrom(text) {
   return found.size ? [...found].sort() : null;
 }
 
+/* Last resort for pages that list regions without a heading we recognise —
+   the Veo pages do this. Scanning the whole page is less precise, so anything
+   found this way is marked confidence:"low" and logged. */
+function anyRegionsIn(text) {
+  const found = new Set();
+  for (const m of text.matchAll(/[a-z]+-[a-z0-9-]+\d|global/gi)) {
+    const t = m[0].toLowerCase();
+    if (VOCAB.has(t)) found.add(t);
+  }
+  return found.size ? [...found].sort() : null;
+}
+
 /* Google phrases deprecation several ways; catch the sentence, don't judge it. */
 function deprecationFrom(text) {
   const m = text.match(/[^.\n]*\b(deprecat\w*|retire\w*|shut ?down|discontinu\w*|no longer available)\b[^.\n]*\./i);
@@ -82,9 +94,15 @@ function capabilitiesFrom(text) {
   return { modelType, capabilities: [{ inputModalities: inputs || ['TEXT'], outputModalities: o }] };
 }
 
+/* A real model id always carries a version: gemini-2.5-flash, veo-3.1-generate-001,
+   text-embedding-005. A bare family word like "gemini" is prose, not an id. */
 function modelIdFrom(text) {
-  const m = text.match(/\b(gemini|veo|imagen|text-embedding|text-multilingual-embedding)[a-z0-9.\-]*\b/i);
-  return m ? m[0].toLowerCase() : null;
+  const re = /\b(?:gemini|veo|imagen|gemma|text-embedding|text-multilingual-embedding|virtual-try-on)[a-z0-9.\-]*\b/gi;
+  for (const m of text.match(re) || []) {
+    const id = m.toLowerCase().replace(/[.\-]+$/, '');
+    if (/\d/.test(id) && id.length > 8 && /[.\-]/.test(id)) return id;
+  }
+  return null;
 }
 
 /* ---------- browser ---------- */
@@ -157,16 +175,32 @@ const CONCURRENCY = 4;
 await pool(Object.entries(cfg.models), CONCURRENCY, async ([model, spec], p) => {
   const url = cfg._baseUrl + spec.path + (spec.anchor ? '#' + spec.anchor : '');
   try {
-    const text = await pageText(cfg._baseUrl + spec.path, spec.anchor, p);
-    const regions = regionsFrom(text);
-    if (!regions) throw new Error('no regions block found');
-    const entry = { regions, url, status: prev.models?.[model]?.status || 'known' };
+    let text, how = 'section';
+    try {
+      text = await pageText(cfg._baseUrl + spec.path, spec.anchor, p);
+      if (!spec.anchor) how = 'page';
+    } catch (e) {
+      if (!spec.anchor) throw e;               // no anchor to fall back from
+      text = await pageText(cfg._baseUrl + spec.path, null, p);
+      how = 'whole page (anchor not found)';
+    }
+    let regions = regionsFrom(text), confidence = 'high';
+    if (!regions) {
+      regions = anyRegionsIn(text);
+      confidence = 'low';
+      how += ' + unlabelled scan';
+    }
+    if (!regions) throw new Error('no regions found anywhere on the page');
+    const entry = { regions, url, confidence, readFrom: how,
+                    status: prev.models?.[model]?.status || 'known' };
     const caps = capabilitiesFrom(text);
     if (caps) entry.inferred = caps;
     const dep = deprecationFrom(text);
     if (dep) { entry.deprecationNote = dep; notes.push(`${model}: ${dep}`); }
     out.models[model] = entry;
-    console.log(`OK    ${model.padEnd(32)} ${regions.length} regions${dep ? '  ** DEPRECATION NOTE **' : ''}`);
+    console.log(`OK    ${model.padEnd(32)} ${regions.length} regions` +
+      (confidence === 'low' ? `  [low confidence: ${how}]` : '') +
+      (dep ? '  ** DEPRECATION NOTE **' : ''));
   } catch (err) {
     failures.push({ model, url, error: String(err.message || err) });
     if (prev.models?.[model]) out.models[model] = prev.models[model];
@@ -204,21 +238,28 @@ try {
       .filter(h => h.startsWith(base) && h !== base && !h.endsWith('/google-models')),
     cfg._baseUrl);
 
-  /* Model pages look like  .../models/<family>/<model-slug> . Everything with a
-     different shape is documentation — guides, tutorials, policy pages — and
-     visiting them is what made the first run take half an hour. */
-  const NOT_A_FAMILY = new Set(['streamlit','capabilities','tutorials','samples',
-    'code-samples','guides','reference','quotas','pricing','security','migration']);
+  /* Only these folders hold model pages. Everything else under /models/ is
+     documentation — tuning guides, video how-tos, getting-started pages — and
+     following those is what made earlier runs crawl ~190 useless pages.
+     If Google introduces a new family, add it here and to models.json. */
+  const FAMILIES = new Set(cfg._families ||
+    ['gemini','veo','imagen','embeddings','vto','gemma','lyria','chirp','medlm']);
+  const DOC_SLUGS = /^(overview|best-practice|quickstart|prompt-guide|responsible-ai|migrate|pricing|quotas|versions|release-notes)$/i;
   const looksLikeModelPage = (u) => {
     const parts = u.slice(cfg._baseUrl.length).replace(/\/$/, '').split('/');
-    return parts.length === 2 && !NOT_A_FAMILY.has(parts[0]);
+    return parts.length === 2 && FAMILIES.has(parts[0]) && !DOC_SLUGS.test(parts[1]);
   };
+  const MAX_DISCOVER = 60;
 
   const knownPaths = new Set(Object.values(cfg.models).map(s => cfg._baseUrl + s.path));
   const all = [...new Set(links)];
-  const fresh = all.filter(u => !knownPaths.has(u) && looksLikeModelPage(u));
-  console.log(`\nindex: ${all.length} links, ${fresh.length} look like model pages worth checking`);
-  console.log('candidates:\n  ' + fresh.map(u => u.slice(cfg._baseUrl.length)).sort().join('\n  '));
+  let fresh = all.filter(u => !knownPaths.has(u) && looksLikeModelPage(u)).sort();
+  if (fresh.length > MAX_DISCOVER) {
+    console.log(`NOTE: ${fresh.length} candidates found, checking the first ${MAX_DISCOVER}. Not all were examined.`);
+    fresh = fresh.slice(0, MAX_DISCOVER);
+  }
+  console.log(`\nindex: ${all.length} links, ${fresh.length} candidate model pages`);
+  console.log('candidates:\n  ' + fresh.map(u => u.slice(cfg._baseUrl.length)).join('\n  '));
 
   await pool(fresh, CONCURRENCY, async (url, p) => {
     try {
