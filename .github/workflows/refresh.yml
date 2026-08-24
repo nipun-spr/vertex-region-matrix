@@ -11,6 +11,7 @@ permissions:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
@@ -24,17 +25,33 @@ jobs:
           npm install playwright@latest
           npx playwright install --with-deps chromium
 
+      - name: Show what's in the repo
+        run: |
+          echo "--- repo root ---"
+          ls -la
+          echo "--- everything, 2 levels deep ---"
+          find . -maxdepth 2 -not -path './.git/*' -not -path './node_modules*' | sort
+
       - name: Scrape model pages
-        run: node scrape.mjs
+        run: |
+          if [ ! -f scrape.mjs ]; then
+            echo "::error::scrape.mjs is not at the repo root. See the file listing above for where it actually is."
+            exit 1
+          fi
+          node scrape.mjs
 
       - name: Commit regions.json if it changed
         run: |
           git config user.name  "region-bot"
           git config user.email "region-bot@users.noreply.github.com"
-          if git diff --quiet regions.json; then
-            echo "No change."
+          git add regions.json
+          # --cached compares against the last commit, which also works the very
+          # first time when regions.json has never been committed before.
+          if git diff --cached --quiet; then
+            echo "regions.json is unchanged - nothing to commit."
           else
-            git add regions.json
-            git commit -m "Region matrix update: $(head -c 200 changes.txt | tr '\n' ' ')"
+            MSG=$(head -c 200 changes.txt 2>/dev/null | tr '\n' ' ')
+            git commit -m "Region matrix update: ${MSG:-first run}"
             git push
+            echo "Committed."
           fi
