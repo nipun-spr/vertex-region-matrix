@@ -1,27 +1,78 @@
 {
-  "_comment": "Known models. 'path' is appended to _baseUrl. 'anchor' scopes extraction to one section of a shared page (several Veo variants live on a single page). Anything the scraper discovers on the index page and doesn't find here is reported as new.",
+  "_comment": "Known models. 'path' is appended to _baseUrl. 'anchor' scopes extraction to one section of a shared page. Embedding models live under gemini/, not embeddings/ \u2014 gemini/embedding-2 is confirmed, the other three are best guesses; a 404 keeps that model's previous data and discovery will surface the real page under 'NEW'.",
   "_baseUrl": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
   "_indexUrl": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/google-models",
+  "_families": [
+    "gemini",
+    "veo",
+    "imagen",
+    "embeddings",
+    "vto",
+    "gemma",
+    "lyria",
+    "chirp",
+    "medlm"
+  ],
   "models": {
-    "gemini-3.7-flash":            { "path": "gemini/3-7-flash" },
-    "gemini-3.6-flash":            { "path": "gemini/3-6-flash" },
-    "gemini-3.5-flash":            { "path": "gemini/3-5-flash" },
-    "gemini-3.5-flash-lite":       { "path": "gemini/3-5-flash-lite" },
-    "gemini-3.1-flash-lite":       { "path": "gemini/3-1-flash-lite" },
-    "gemini-3.1-flash-image":      { "path": "gemini/3-1-flash-image" },
-    "gemini-3.1-flash-lite-image": { "path": "gemini/3-1-flash-lite-image" },
-    "gemini-3-pro-image":          { "path": "gemini/3-pro-image" },
-    "gemini-2.5-pro":              { "path": "gemini/2-5-pro" },
-    "gemini-2.5-flash":            { "path": "gemini/2-5-flash" },
-    "gemini-2.5-flash-lite":       { "path": "gemini/2-5-flash-lite" },
-    "gemini-2.5-flash-image":      { "path": "gemini/2-5-flash-image" },
-    "gemini-embedding-2":          { "path": "embeddings/gemini-embedding-2" },
-    "gemini-embedding-001":        { "path": "embeddings/gemini-embedding" },
-    "text-embedding-005":          { "path": "embeddings/text-embedding-005" },
-    "text-multilingual-embedding-002": { "path": "embeddings/text-multilingual-embedding-002" },
-
-    "veo-3.1-generate-001":        { "path": "veo/3-1-generate", "anchor": "3.1-generate-001" },
-    "veo-3.1-fast-generate-001":   { "path": "veo/3-1-generate", "anchor": "3.1-fast-generate-001" },
-    "veo-3.1-lite-generate-001":   { "path": "veo/3-1-generate", "anchor": "3.1-lite-generate-001" }
+    "gemini-3.7-flash": {
+      "path": "gemini/3-7-flash"
+    },
+    "gemini-3.6-flash": {
+      "path": "gemini/3-6-flash"
+    },
+    "gemini-3.5-flash": {
+      "path": "gemini/3-5-flash"
+    },
+    "gemini-3.5-flash-lite": {
+      "path": "gemini/3-5-flash-lite"
+    },
+    "gemini-3.1-flash-lite": {
+      "path": "gemini/3-1-flash-lite"
+    },
+    "gemini-3.1-flash-image": {
+      "path": "gemini/3-1-flash-image"
+    },
+    "gemini-3.1-flash-lite-image": {
+      "path": "gemini/3-1-flash-lite-image"
+    },
+    "gemini-3-pro-image": {
+      "path": "gemini/3-pro-image"
+    },
+    "gemini-2.5-pro": {
+      "path": "gemini/2-5-pro"
+    },
+    "gemini-2.5-flash": {
+      "path": "gemini/2-5-flash"
+    },
+    "gemini-2.5-flash-lite": {
+      "path": "gemini/2-5-flash-lite"
+    },
+    "gemini-2.5-flash-image": {
+      "path": "gemini/2-5-flash-image"
+    },
+    "gemini-embedding-2": {
+      "path": "gemini/embedding-2"
+    },
+    "gemini-embedding-001": {
+      "path": "gemini/embedding"
+    },
+    "text-embedding-005": {
+      "path": "gemini/text-embedding-005"
+    },
+    "text-multilingual-embedding-002": {
+      "path": "gemini/text-multilingual-embedding-002"
+    },
+    "veo-3.1-generate-001": {
+      "path": "veo/3-1-generate",
+      "anchor": "3.1-generate-001"
+    },
+    "veo-3.1-fast-generate-001": {
+      "path": "veo/3-1-generate",
+      "anchor": "3.1-fast-generate-001"
+    },
+    "veo-3.1-lite-generate-001": {
+      "path": "veo/3-1-generate",
+      "anchor": "3.1-lite-generate-001"
+    }
   }
 }
