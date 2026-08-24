@@ -34,8 +34,10 @@ const VOCAB = new Set([
 
 /* ---------- extraction helpers (run against plain page text) ---------- */
 
+const REGION_HEADINGS = /(Supported\s+regions|Model\s+availability|Available\s+regions|Supported\s+locations|Regions\s+and\s+availability)/i;
+
 function regionsFrom(text) {
-  const i = text.search(/Supported\s+regions/i);
+  const i = text.search(REGION_HEADINGS);
   if (i === -1) return null;
   let b = text.slice(i, i + 4000);
   const stop = b.search(/\n\s*(Quotas|Pricing|Technical specifications|Model versions|Supported inputs|Try in)/i);
@@ -157,7 +159,7 @@ await pool(Object.entries(cfg.models), CONCURRENCY, async ([model, spec], p) => 
   try {
     const text = await pageText(cfg._baseUrl + spec.path, spec.anchor, p);
     const regions = regionsFrom(text);
-    if (!regions) throw new Error('no "Supported regions" block');
+    if (!regions) throw new Error('no regions block found');
     const entry = { regions, url, status: prev.models?.[model]?.status || 'known' };
     const caps = capabilitiesFrom(text);
     if (caps) entry.inferred = caps;
@@ -169,6 +171,20 @@ await pool(Object.entries(cfg.models), CONCURRENCY, async ([model, spec], p) => 
     failures.push({ model, url, error: String(err.message || err) });
     if (prev.models?.[model]) out.models[model] = prev.models[model];
     console.log(`FAIL  ${model.padEnd(32)} ${err.message || err}${prev.models?.[model] ? '  (kept previous)' : ''}`);
+    /* Diagnostic: on a page that loaded but didn't parse, show its headings and
+       any region codes it does contain, so the next run can be aimed properly. */
+    if (!/HTTP \d/.test(String(err.message))) {
+      try {
+        const info = await p.evaluate(() => ({
+          heads: [...document.querySelectorAll('h1,h2,h3')].map(h => (h.id ? '#' + h.id + ' ' : '') + h.innerText.trim()).slice(0, 30),
+          text: document.body.innerText,
+        }));
+        const hits = [...new Set((info.text.match(/[a-z]+-[a-z0-9-]+\d|global/gi) || []).map(x => x.toLowerCase()))]
+          .filter(x => VOCAB.has(x));
+        console.log(`      headings: ${info.heads.join(' | ').slice(0, 700)}`);
+        console.log(`      region codes present on page: ${hits.length ? hits.join(', ') : '(none)'}`);
+      } catch {}
+    }
     if (DEBUG) {
       try { console.log('-----\n' + (await p.evaluate(() => document.body.innerText)).slice(0, 1500) + '\n-----'); } catch {}
     }
@@ -178,8 +194,10 @@ await pool(Object.entries(cfg.models), CONCURRENCY, async ([model, spec], p) => 
 /* ---------- 2. discovery ---------- */
 const discovered = [];
 try {
-  await page.goto(cfg._indexUrl, { waitUntil: 'networkidle', timeout: 45000 });
-  await page.waitForTimeout(1500);
+  await page.goto(cfg._indexUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
+  await page.waitForFunction(
+    () => document.querySelectorAll('a[href]').length > 50, { timeout: 15000 },
+  ).catch(() => {});
   const links = await page.evaluate((base) =>
     [...document.querySelectorAll('a[href]')]
       .map(a => a.href.split('#')[0].split('?')[0])
@@ -200,6 +218,7 @@ try {
   const all = [...new Set(links)];
   const fresh = all.filter(u => !knownPaths.has(u) && looksLikeModelPage(u));
   console.log(`\nindex: ${all.length} links, ${fresh.length} look like model pages worth checking`);
+  console.log('candidates:\n  ' + fresh.map(u => u.slice(cfg._baseUrl.length)).sort().join('\n  '));
 
   await pool(fresh, CONCURRENCY, async (url, p) => {
     try {
