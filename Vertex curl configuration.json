@@ -1,0 +1,7 @@
+{
+  "name": "vertex-region-matrix",
+  "private": true,
+  "type": "module",
+  "scripts": { "scrape": "node scrape.mjs" },
+  "dependencies": { "playwright": "^1.49.0" }
+}
