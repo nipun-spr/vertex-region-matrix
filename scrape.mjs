@@ -91,15 +91,31 @@ const browser = await chromium.launch();
 const ctx = await browser.newContext({
   userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36',
 });
+/* Images, fonts, media and stylesheets don't affect the text we read. Dropping
+   them is most of the speed-up. */
+await ctx.route('**/*', (route) => {
+  const t = route.request().resourceType();
+  return (t === 'image' || t === 'font' || t === 'media' || t === 'stylesheet')
+    ? route.abort() : route.continue();
+});
 const page = await ctx.newPage();
 
-/** Text of the whole page, or just one anchored section when `anchor` is given. */
-async function pageText(url, anchor) {
-  const res = await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
+/** Load a page and return as soon as the text we need has rendered. */
+async function loadText(p, url) {
+  const res = await p.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
   if (!res || res.status() >= 400) throw new Error(`HTTP ${res ? res.status() : '?'}`);
-  await page.waitForTimeout(1200);
-  if (!anchor) return page.evaluate(() => document.body.innerText);
-  const scoped = await page.evaluate((id) => {
+  await p.waitForFunction(
+    () => /Supported\s+regions/i.test(document.body.innerText),
+    { timeout: 7000 },
+  ).catch(() => {});           // not every page has one; carry on and let the parser decide
+  return p.evaluate(() => document.body.innerText);
+}
+
+/** Text of the whole page, or just one anchored section when `anchor` is given. */
+async function pageText(url, anchor, p = page) {
+  const full = await loadText(p, url);
+  if (!anchor) return full;
+  const scoped = await p.evaluate((id) => {
     const el = document.getElementById(id) ||
                document.querySelector(`[id="${CSS.escape(id)}"]`);
     if (!el) return null;
@@ -116,18 +132,30 @@ async function pageText(url, anchor) {
   return scoped;
 }
 
+/** Run `fn` over `items` with a small pool of pages. */
+async function pool(items, size, fn) {
+  const pages = [page];
+  for (let i = 1; i < size; i++) pages.push(await ctx.newPage());
+  let idx = 0;
+  await Promise.all(pages.map(async (p) => {
+    while (idx < items.length) { const i = idx++; await fn(items[i], p); }
+  }));
+  for (let i = 1; i < pages.length; i++) await pages[i].close();
+}
+
 const out = {
   fetchedAt: new Date().toISOString(),
   source: cfg._baseUrl,
   models: {},
 };
 const failures = [], notes = [];
+const CONCURRENCY = 4;
 
 /* ---------- 1. known models ---------- */
-for (const [model, spec] of Object.entries(cfg.models)) {
+await pool(Object.entries(cfg.models), CONCURRENCY, async ([model, spec], p) => {
   const url = cfg._baseUrl + spec.path + (spec.anchor ? '#' + spec.anchor : '');
   try {
-    const text = await pageText(cfg._baseUrl + spec.path, spec.anchor);
+    const text = await pageText(cfg._baseUrl + spec.path, spec.anchor, p);
     const regions = regionsFrom(text);
     if (!regions) throw new Error('no "Supported regions" block');
     const entry = { regions, url, status: prev.models?.[model]?.status || 'known' };
@@ -142,10 +170,10 @@ for (const [model, spec] of Object.entries(cfg.models)) {
     if (prev.models?.[model]) out.models[model] = prev.models[model];
     console.log(`FAIL  ${model.padEnd(32)} ${err.message || err}${prev.models?.[model] ? '  (kept previous)' : ''}`);
     if (DEBUG) {
-      try { console.log('-----\n' + (await page.evaluate(() => document.body.innerText)).slice(0, 1500) + '\n-----'); } catch {}
+      try { console.log('-----\n' + (await p.evaluate(() => document.body.innerText)).slice(0, 1500) + '\n-----'); } catch {}
     }
   }
-}
+});
 
 /* ---------- 2. discovery ---------- */
 const discovered = [];
@@ -158,16 +186,28 @@ try {
       .filter(h => h.startsWith(base) && h !== base && !h.endsWith('/google-models')),
     cfg._baseUrl);
 
-  const knownPaths = new Set(Object.values(cfg.models).map(s => cfg._baseUrl + s.path));
-  const fresh = [...new Set(links)].filter(u => !knownPaths.has(u));
+  /* Model pages look like  .../models/<family>/<model-slug> . Everything with a
+     different shape is documentation — guides, tutorials, policy pages — and
+     visiting them is what made the first run take half an hour. */
+  const NOT_A_FAMILY = new Set(['streamlit','capabilities','tutorials','samples',
+    'code-samples','guides','reference','quotas','pricing','security','migration']);
+  const looksLikeModelPage = (u) => {
+    const parts = u.slice(cfg._baseUrl.length).replace(/\/$/, '').split('/');
+    return parts.length === 2 && !NOT_A_FAMILY.has(parts[0]);
+  };
 
-  for (const url of fresh) {
+  const knownPaths = new Set(Object.values(cfg.models).map(s => cfg._baseUrl + s.path));
+  const all = [...new Set(links)];
+  const fresh = all.filter(u => !knownPaths.has(u) && looksLikeModelPage(u));
+  console.log(`\nindex: ${all.length} links, ${fresh.length} look like model pages worth checking`);
+
+  await pool(fresh, CONCURRENCY, async (url, p) => {
     try {
-      const text = await pageText(url);
+      const text = await pageText(url, null, p);
       const regions = regionsFrom(text);
       const id = modelIdFrom(text);
-      if (!id || !regions) { console.log(`skip  ${url}  (not a model page)`); continue; }
-      if (out.models[id]) continue;
+      if (!id || !regions) return;   // quietly ignore; the filter above already did the heavy lifting
+      if (out.models[id]) return;
       const entry = { regions, url, status: 'new' };
       const caps = capabilitiesFrom(text);
       if (caps) entry.inferred = caps;
@@ -176,8 +216,8 @@ try {
       out.models[id] = entry;
       discovered.push(id);
       console.log(`NEW   ${id.padEnd(32)} ${regions.length} regions  ${dep ? '(deprecated)' : ''}`);
-    } catch { /* index links to plenty of non-model pages; ignore quietly */ }
-  }
+    } catch { /* unreachable or not a model page; ignore quietly */ }
+  });
 } catch (err) {
   failures.push({ model: '(index page)', url: cfg._indexUrl, error: String(err.message || err) });
   console.log(`FAIL  index page  ${err.message || err}`);
