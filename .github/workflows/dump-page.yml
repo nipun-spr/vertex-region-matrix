@@ -1,0 +1,79 @@
+name: Dump page text (one-off diagnostic)
+
+# Manual only. Reads one documentation page and prints what the scraper sees.
+# Writes nothing, commits nothing, changes no repo file. Safe to delete afterwards.
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'Model page to inspect'
+        required: true
+        default: 'https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-flash'
+
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1 || true
+          npm install playwright@1.49.1
+          npx playwright install --with-deps chromium
+
+      - name: Dump the page
+        env:
+          PAGE_URL: ${{ inputs.url }}
+        run: |
+          cat > dump-page.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import { appendFileSync } from 'fs';
+
+          const URL = process.env.PAGE_URL;
+          const browser = await chromium.launch();
+          const ctx = await browser.newContext({
+            userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36',
+          });
+          const page = await ctx.newPage();
+          await page.goto(URL, { waitUntil: 'domcontentloaded', timeout: 45000 });
+          await page.waitForFunction(
+            () => /Supported\s+regions|Model\s+availability|Available\s+regions/i.test(document.body.innerText),
+            { timeout: 10000 },
+          ).catch(() => {});
+          const text = await page.evaluate(() => document.body.innerText);
+          await browser.close();
+
+          const RE = /(Supported\s+regions|Model\s+availability|Available\s+regions|Supported\s+locations|Regions\s+and\s+availability)/i;
+          const i = text.search(RE);
+
+          let md = '## Page dump\n\n';
+          md += '- URL: `' + URL + '`\n';
+          md += '- characters: **' + text.length + '**\n';
+          md += '- mentions "multi-region": **' + /multi-?region/i.test(text) + '**\n';
+          md += '- regions heading found at index: **' + i + '**\n\n';
+
+          md += '### 2500 characters from the regions heading (tabs shown as [TAB])\n\n```\n';
+          md += (i === -1 ? text.slice(0, 2500) : text.slice(i, i + 2500)).replace(/\t/g, '[TAB]');
+          md += '\n```\n\n';
+
+          md += '### Every line containing a bare us / eu token\n\n```\n';
+          let n = 0;
+          for (const raw of text.split('\n')) {
+            if (/(^|[^A-Za-z0-9-])(us|eu)([^A-Za-z0-9-]|$)/.test(raw)) {
+              md += JSON.stringify(raw) + '\n';
+              if (++n >= 40) { md += '... (truncated at 40)\n'; break; }
+            }
+          }
+          if (!n) md += '(none)\n';
+          md += '```\n';
+
+          console.log(md);
+          if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
+          EOF
+          node dump-page.mjs
