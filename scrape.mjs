@@ -50,6 +50,11 @@ function regionsFrom(text) {
     if (VOCAB.has(t)) found.add(t);
   }
   for (const t of multiRegionsIn(b)) found.add(t);
+  /* Multi-region endpoints are routinely documented in their own section, outside the
+     window this function scopes to. Scanning only `b` therefore misses them on exactly
+     the pages where the scoped read succeeds. Sweep the whole page as well, under the
+     strict rule (both corroborations required), so the two paths cannot disagree. */
+  for (const t of multiRegionsIn(text, true)) found.add(t);
   return found.size ? [...found].sort() : null;
 }
 
@@ -66,34 +71,53 @@ function anyRegionsIn(text) {
   return found.size ? [...found].sort() : null;
 }
 
-/* Multi-region endpoints ("us", "eu") are bare two-letter tokens, so they cannot be found
-   the way the hyphenated codes are: /us/ hits "Australia", "thus" and every "let us" in
-   prose, and an uppercase "US" is nearly always a table heading. A token is accepted only
-   from a line that is nothing but region codes - a table cell or a short list - and only
-   when the page corroborates it, either by talking about multi-region endpoints or by
-   naming a real regional code on the same line. Looser matching writes a region the model
-   is not served from, which is what the VOCAB allowlist exists to prevent.
+/* Google documents the multi-region endpoints as a LABELLED row inside the regions
+   block, like this (verified against the live gemini/3-8-flash page):
 
-   strict=true demands BOTH corroborations at once. anyRegionsIn() passes it, because that
-   path scans the entire document - nav, breadcrumbs, locale switchers and footers included
-   - where a stray one-word "us" line is far likelier than inside a regions block. */
+       Supported regions
+       Model availability
+       Global: global
+       Multi-region: us, eu
+
+   So the reliable signal is the label, not the bare token. "us" and "eu" on their own are
+   hopeless to match: /us/ hits "Australia", "thus" and every "let us" in prose, and an
+   uppercase "US" is nearly always a heading. Two line-scoped rules:
+
+     1. a "Multi-region:" label — take the region codes that follow it;
+     2. a line that is nothing but region codes (a bare cell), when the page corroborates
+        it — a secondary net in case the label wording changes.
+
+   strict=true keeps rule 1 only. The whole-page paths pass it, because out there a stray
+   one-word "us" line — a locale switcher, a "Contact us" footer — is far likelier than a
+   real region cell. */
 const MULTIREGION_CONTEXT = /multi-?region/i;
+const MULTIREGION_LABEL   = /^\s*multi-?region\s*:\s*(.+)$/i;
 
 function multiRegionsIn(text, strict = false) {
   const corroborated = MULTIREGION_CONTEXT.test(text);
   const found = new Set();
+  const take = parts => { for (const p of parts) if (p === 'us' || p === 'eu') found.add(p); };
+
   for (const raw of text.split('\n')) {
     const line = raw.trim();
-    if (!line || line.length > 120) continue;
+    if (!line || line.length > 200) continue;
+
+    const label = line.match(MULTIREGION_LABEL);
+    if (label) {
+      take(label[1].split(/[,;|\s]+/).filter(Boolean).filter(x => VOCAB.has(x)));
+      continue;
+    }
+    if (strict) continue;
+
     const parts = line.split(/[,;|\s]+/).filter(Boolean);
     if (!parts.length || parts.length > 12) continue;
-    if (!parts.every(p => VOCAB.has(p))) continue;
-    const hasRegional = parts.some(p => p.includes('-'));
-    if (strict ? !(corroborated && hasRegional) : !(corroborated || hasRegional)) continue;
-    for (const p of parts) if (p === 'us' || p === 'eu') found.add(p);
+    if (!parts.every(x => VOCAB.has(x))) continue;
+    if (!(corroborated || parts.some(x => x.includes('-')))) continue;
+    take(parts);
   }
   return [...found].sort();
 }
+
 
 /* Google phrases deprecation several ways; catch the sentence, don't judge it. */
 function deprecationFrom(text) {
@@ -201,7 +225,7 @@ const out = {
   source: cfg._baseUrl,
   models: {},
 };
-const failures = [], notes = [];
+const failures = [], notes = [], multiRegionMisses = [];
 const CONCURRENCY = 4;
 
 /* ---------- 1. known models ---------- */
@@ -232,6 +256,13 @@ await pool(Object.entries(cfg.models), CONCURRENCY, async ([model, spec], p) => 
       if (regions) { confidence = 'low'; how = 'whole page (section had none)'; }
     }
     if (!regions) throw new Error('no regions found anywhere on the page');
+    /* Self-diagnosis for the multi-region endpoints. If a page talks about them but no
+       bare "us"/"eu" token cleared multiRegionsIn(), the line rule in that matcher is the
+       suspect — say so out loud, rather than leaving a silent absence to be puzzled over. */
+    if (MULTIREGION_CONTEXT.test(text) && !regions.includes('us') && !regions.includes('eu')) {
+      multiRegionMisses.push(model);
+      console.log(`NOTE  ${model.padEnd(32)} page mentions multi-region, but no us/eu token was accepted`);
+    }
     const entry = { regions, url, confidence, readFrom: how,
                     status: prev.models?.[model]?.status || 'known' };
     const caps = capabilitiesFrom(text);
@@ -346,6 +377,9 @@ for (const [m, e] of Object.entries(out.models)) {
 for (const m of Object.keys(prev.models || {})) if (!out.models[m]) changes.push(`GONE ${m} (page no longer listed)`);
 
 console.log(`\n${Object.keys(out.models).length} models, ${failures.length} failed, ${discovered.length} newly discovered`);
+const mrHits = Object.entries(out.models).filter(([, e]) => e.regions.includes('us') || e.regions.includes('eu'));
+console.log(`multi-region: ${mrHits.length} model(s) offer us/eu` +
+  (multiRegionMisses.length ? `; ${multiRegionMisses.length} page(s) mention multi-region without a usable token: ${multiRegionMisses.join(', ')}` : ''));
 if (notes.length) console.log('\nDEPRECATION NOTES:\n' + notes.join('\n'));
 console.log(changes.length ? '\nCHANGES:\n' + changes.join('\n') : '\nNo changes since last run.');
 writeFileSync('changes.txt', changes.join('\n'));
