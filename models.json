@@ -1,5 +1,5 @@
 {
-  "_comment": "Known models. 'path' is appended to _baseUrl. 'anchor' scopes extraction to one section of a shared page. Embedding models live under gemini/, not embeddings/ \u2014 gemini/embedding-2 is confirmed, the other three are best guesses; a 404 keeps that model's previous data and discovery will surface the real page under 'NEW'.",
+  "_comment": "Known models. 'path' is appended to _baseUrl. 'anchor' scopes extraction to one section of a shared page. Embedding models live under gemini/, not embeddings/ — gemini/embedding-2 is confirmed, the other three are best guesses; a 404 keeps that model's previous data and discovery will surface the real page under 'NEW'.",
   "_baseUrl": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
   "_indexUrl": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/google-models",
   "_families": [
@@ -73,6 +73,9 @@
     "veo-3.1-lite-generate-001": {
       "path": "veo/3-1-generate",
       "anchor": "3.1-lite-generate-001"
+    },
+    "gemini-3.8-flash": {
+      "path": "gemini/3-8-flash"
     }
   }
 }
