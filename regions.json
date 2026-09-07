@@ -1,16 +1,7 @@
 {
-  "fetchedAt": "2026-09-04T05:07:15.336Z",
+  "fetchedAt": "2026-09-07T05:06:11.598Z",
   "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
   "models": {
-    "gemini-3.6-flash": {
-      "regions": [
-        "global"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-6-flash",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known"
-    },
     "gemini-3.7-flash": {
       "regions": [
         "global"
@@ -25,6 +16,24 @@
         "global"
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-flash-lite",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known"
+    },
+    "gemini-3.6-flash": {
+      "regions": [
+        "global"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-6-flash",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known"
+    },
+    "gemini-3.1-flash-lite": {
+      "regions": [
+        "global"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-flash-lite",
       "confidence": "high",
       "readFrom": "page",
       "status": "known"
@@ -44,54 +53,11 @@
       "readFrom": "page",
       "status": "known"
     },
-    "gemini-3.1-flash-lite": {
-      "regions": [
-        "global"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-flash-lite",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known"
-    },
     "gemini-3.1-flash-image": {
       "regions": [
         "global"
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-flash-image",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known"
-    },
-    "gemini-3-pro-image": {
-      "regions": [
-        "global"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-pro-image",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known"
-    },
-    "gemini-2.5-pro": {
-      "regions": [
-        "asia-northeast1",
-        "europe-central2",
-        "europe-north1",
-        "europe-southwest1",
-        "europe-west1",
-        "europe-west4",
-        "europe-west8",
-        "europe-west9",
-        "global",
-        "northamerica-northeast1",
-        "us-central1",
-        "us-east1",
-        "us-east4",
-        "us-east5",
-        "us-south1",
-        "us-west1",
-        "us-west4"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-pro",
       "confidence": "high",
       "readFrom": "page",
       "status": "known"
@@ -137,6 +103,40 @@
       "readFrom": "page",
       "status": "known"
     },
+    "gemini-2.5-pro": {
+      "regions": [
+        "asia-northeast1",
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west4",
+        "europe-west8",
+        "europe-west9",
+        "global",
+        "northamerica-northeast1",
+        "us-central1",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-south1",
+        "us-west1",
+        "us-west4"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-pro",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known"
+    },
+    "gemini-3-pro-image": {
+      "regions": [
+        "global"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-pro-image",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known"
+    },
     "gemini-2.5-flash-lite": {
       "regions": [
         "europe-central2",
@@ -160,6 +160,15 @@
       "readFrom": "page",
       "status": "known"
     },
+    "gemini-embedding-2": {
+      "regions": [
+        "global"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/embedding-2",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known"
+    },
     "gemini-2.5-flash-image": {
       "regions": [
         "europe-central2",
@@ -178,15 +187,6 @@
         "us-west4"
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-flash-image",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known"
-    },
-    "gemini-embedding-2": {
-      "regions": [
-        "global"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/embedding-2",
       "confidence": "high",
       "readFrom": "page",
       "status": "known"
@@ -218,6 +218,13 @@
       "readFrom": "whole page (anchor not found)",
       "status": "known"
     },
+    "gemini-3.1-pro-preview-customtools": {
+      "regions": [
+        "global"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro",
+      "status": "new"
+    },
     "gemini-live-2.5-flash-native-audio": {
       "regions": [
         "europe-central2",
@@ -235,13 +242,6 @@
         "us-west4"
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-flash-live-api",
-      "status": "new"
-    },
-    "gemini-3.1-pro-preview-customtools": {
-      "regions": [
-        "global"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro",
       "status": "new"
     },
     "gemini-3.5-live-translate-preview": {
@@ -330,8 +330,8 @@
     }
   ],
   "discovered": [
-    "gemini-live-2.5-flash-native-audio",
     "gemini-3.1-pro-preview-customtools",
+    "gemini-live-2.5-flash-native-audio",
     "gemini-3.5-live-translate-preview",
     "gemini-3.8-flash",
     "gemini-3.5-transcribe-live-preview",
