@@ -46,42 +46,34 @@ jobs:
           fi
           node scrape.mjs
 
-      # ---------------------------------------------------------------
-      # NEW: auto-promote newly discovered STABLE Gemini models into
-      # models.json. Previously every new Gemini release needed a manual
-      # edit before it was properly tracked. `path` is derived from the URL
-      # discovery actually visited, so nothing is guessed. Anything that is
-      # not a stable versioned Gemini model stays status:"new" for a human.
-      # ---------------------------------------------------------------
       - name: Promote discovered models
         run: node promote-discovered.mjs
 
-      # ---------------------------------------------------------------
-      # NEW: the regions.json -> curl-builder handoff. Previously absent,
-      # which is why the builder's model list and its REGIONS_UPDATED /
-      # REGIONS_SOURCE stamps drifted from the scraper output.
-      # ---------------------------------------------------------------
       - name: Build artifact data
         run: node build-artifact-data.mjs
 
-      # ---------------------------------------------------------------
-      # NEW: failures[] used to be written into regions.json and never
-      # surfaced anywhere. A silently broken extractor looked exactly like
-      # "no changes" because failed models keep their previous data.
-      # ---------------------------------------------------------------
       - name: Report scrape failures
         run: |
           node -e '
             const fs = require("fs");
             const r = JSON.parse(fs.readFileSync("regions.json", "utf8"));
             const f = r.failures || [];
-            const nu = (r.discovered || []);
+            const models = r.models || {};
+            const disc = r.discovered || [];
+
+            // promote-discovered.mjs flips a promoted model to status:"known".
+            // Split the discovered list on that, so an auto-promoted model is never
+            // reported as still needing a manual models.json edit.
+            const promoted = disc.filter(id => (models[id] || {}).status === "known");
+            const awaiting = disc.filter(id => (models[id] || {}).status !== "known");
+
             const sum = process.env.GITHUB_STEP_SUMMARY;
             let md = "## Vertex region matrix\n\n";
             md += `- fetchedAt: \`${r.fetchedAt}\`\n`;
-            md += `- models resolved: **${Object.keys(r.models || {}).length}**\n`;
+            md += `- models resolved: **${Object.keys(models).length}**\n`;
             md += `- scrape failures: **${f.length}**\n`;
-            md += `- newly discovered: **${nu.length}**\n\n`;
+            md += `- newly discovered: **${disc.length}** (auto-promoted ${promoted.length}, awaiting review ${awaiting.length})\n\n`;
+
             if (f.length) {
               md += "### Failures (these models kept their PREVIOUS data)\n\n";
               md += "| model | error | url |\n|---|---|---|\n";
@@ -91,13 +83,25 @@ jobs:
               }
               md += "\n";
             }
-            if (nu.length) {
-              md += "### Newly discovered (status:\"new\" — promote into models.json to track)\n\n";
-              for (const id of nu) {
-                console.log(`::notice title=New model discovered::${id} — status:"new", not auto-enabled`);
+
+            if (promoted.length) {
+              md += "### Auto-promoted into models.json (no action needed)\n\n";
+              for (const id of promoted) {
+                console.log(`::notice title=Model auto-promoted::${id} — now tracked, no manual edit needed`);
                 md += `- \`${id}\`\n`;
               }
+              md += "\n";
             }
+
+            if (awaiting.length) {
+              md += "### Awaiting review (status:\"new\" — the hourly task will queue these)\n\n";
+              for (const id of awaiting) {
+                console.log(`::notice title=New model awaiting review::${id} — status:"new", not auto-enabled`);
+                md += `- \`${id}\`\n`;
+              }
+              md += "\n";
+            }
+
             if (sum) fs.appendFileSync(sum, md);
             if (f.length && process.env.STRICT_FAILURES === "true") {
               console.log(`::error::${f.length} model page(s) failed to scrape and STRICT_FAILURES is true.`);
