@@ -23,6 +23,8 @@ const prev = existsSync('regions.json')
 
 const VOCAB = new Set([
   'global',
+  /* Multi-region endpoints. Matched by multiRegionsIn(), not by the main regex. */
+  'us','eu',
   'us-west1','us-west4','us-central1','us-east1','us-east4','us-east5','us-south1',
   'northamerica-northeast1','northamerica-northeast2','southamerica-east1','southamerica-west1',
   'europe-west1','europe-west2','europe-west3','europe-west4','europe-west6','europe-west8',
@@ -47,6 +49,7 @@ function regionsFrom(text) {
     const t = m[0].toLowerCase();
     if (VOCAB.has(t)) found.add(t);
   }
+  for (const t of multiRegionsIn(b)) found.add(t);
   return found.size ? [...found].sort() : null;
 }
 
@@ -59,7 +62,37 @@ function anyRegionsIn(text) {
     const t = m[0].toLowerCase();
     if (VOCAB.has(t)) found.add(t);
   }
+  for (const t of multiRegionsIn(text, true)) found.add(t);
   return found.size ? [...found].sort() : null;
+}
+
+/* Multi-region endpoints ("us", "eu") are bare two-letter tokens, so they cannot be found
+   the way the hyphenated codes are: /us/ hits "Australia", "thus" and every "let us" in
+   prose, and an uppercase "US" is nearly always a table heading. A token is accepted only
+   from a line that is nothing but region codes - a table cell or a short list - and only
+   when the page corroborates it, either by talking about multi-region endpoints or by
+   naming a real regional code on the same line. Looser matching writes a region the model
+   is not served from, which is what the VOCAB allowlist exists to prevent.
+
+   strict=true demands BOTH corroborations at once. anyRegionsIn() passes it, because that
+   path scans the entire document - nav, breadcrumbs, locale switchers and footers included
+   - where a stray one-word "us" line is far likelier than inside a regions block. */
+const MULTIREGION_CONTEXT = /multi-?region/i;
+
+function multiRegionsIn(text, strict = false) {
+  const corroborated = MULTIREGION_CONTEXT.test(text);
+  const found = new Set();
+  for (const raw of text.split('\n')) {
+    const line = raw.trim();
+    if (!line || line.length > 120) continue;
+    const parts = line.split(/[,;|\s]+/).filter(Boolean);
+    if (!parts.length || parts.length > 12) continue;
+    if (!parts.every(p => VOCAB.has(p))) continue;
+    const hasRegional = parts.some(p => p.includes('-'));
+    if (strict ? !(corroborated && hasRegional) : !(corroborated || hasRegional)) continue;
+    for (const p of parts) if (p === 'us' || p === 'eu') found.add(p);
+  }
+  return [...found].sort();
 }
 
 /* Google phrases deprecation several ways; catch the sentence, don't judge it. */
@@ -221,8 +254,10 @@ await pool(Object.entries(cfg.models), CONCURRENCY, async ([model, spec], p) => 
           heads: [...document.querySelectorAll('h1,h2,h3')].map(h => (h.id ? '#' + h.id + ' ' : '') + h.innerText.trim()).slice(0, 30),
           text: document.body.innerText,
         }));
-        const hits = [...new Set((info.text.match(/[a-z]+-[a-z0-9-]+\d|global/gi) || []).map(x => x.toLowerCase()))]
-          .filter(x => VOCAB.has(x));
+        const hits = [...new Set([
+          ...(info.text.match(/[a-z]+-[a-z0-9-]+\d|global/gi) || []).map(x => x.toLowerCase()),
+          ...multiRegionsIn(info.text, true),
+        ])].filter(x => VOCAB.has(x));
         console.log(`      headings: ${info.heads.join(' | ').slice(0, 700)}`);
         console.log(`      region codes present on page: ${hits.length ? hits.join(', ') : '(none)'}`);
       } catch {}
