@@ -8,6 +8,11 @@ on:
 permissions:
   contents: write
 
+env:
+  # Flip to 'true' to make ANY scrape failure fail the job outright.
+  # Left 'false' so known-broken pages surface as warnings without a permanently red build.
+  STRICT_FAILURES: 'false'
+
 jobs:
   scrape:
     runs-on: ubuntu-latest
@@ -22,7 +27,8 @@ jobs:
       - name: Install Playwright
         run: |
           npm init -y >/dev/null 2>&1 || true
-          npm install playwright@latest
+          # Pinned: 'latest' meant an upstream release could break a scheduled run.
+          npm install playwright@1.49.1
           npx playwright install --with-deps chromium
 
       - name: Show what's in the repo
@@ -40,17 +46,76 @@ jobs:
           fi
           node scrape.mjs
 
-      - name: Commit regions.json if it changed
+      # ---------------------------------------------------------------
+      # NEW: auto-promote newly discovered STABLE Gemini models into
+      # models.json. Previously every new Gemini release needed a manual
+      # edit before it was properly tracked. `path` is derived from the URL
+      # discovery actually visited, so nothing is guessed. Anything that is
+      # not a stable versioned Gemini model stays status:"new" for a human.
+      # ---------------------------------------------------------------
+      - name: Promote discovered models
+        run: node promote-discovered.mjs
+
+      # ---------------------------------------------------------------
+      # NEW: the regions.json -> curl-builder handoff. Previously absent,
+      # which is why the builder's model list and its REGIONS_UPDATED /
+      # REGIONS_SOURCE stamps drifted from the scraper output.
+      # ---------------------------------------------------------------
+      - name: Build artifact data
+        run: node build-artifact-data.mjs
+
+      # ---------------------------------------------------------------
+      # NEW: failures[] used to be written into regions.json and never
+      # surfaced anywhere. A silently broken extractor looked exactly like
+      # "no changes" because failed models keep their previous data.
+      # ---------------------------------------------------------------
+      - name: Report scrape failures
+        run: |
+          node -e '
+            const fs = require("fs");
+            const r = JSON.parse(fs.readFileSync("regions.json", "utf8"));
+            const f = r.failures || [];
+            const nu = (r.discovered || []);
+            const sum = process.env.GITHUB_STEP_SUMMARY;
+            let md = "## Vertex region matrix\n\n";
+            md += `- fetchedAt: \`${r.fetchedAt}\`\n`;
+            md += `- models resolved: **${Object.keys(r.models || {}).length}**\n`;
+            md += `- scrape failures: **${f.length}**\n`;
+            md += `- newly discovered: **${nu.length}**\n\n`;
+            if (f.length) {
+              md += "### Failures (these models kept their PREVIOUS data)\n\n";
+              md += "| model | error | url |\n|---|---|---|\n";
+              for (const x of f) {
+                console.log(`::warning title=Scrape failed::${x.model} — ${x.error} (${x.url})`);
+                md += `| \`${x.model}\` | ${x.error} | ${x.url} |\n`;
+              }
+              md += "\n";
+            }
+            if (nu.length) {
+              md += "### Newly discovered (status:\"new\" — promote into models.json to track)\n\n";
+              for (const id of nu) {
+                console.log(`::notice title=New model discovered::${id} — status:"new", not auto-enabled`);
+                md += `- \`${id}\`\n`;
+              }
+            }
+            if (sum) fs.appendFileSync(sum, md);
+            if (f.length && process.env.STRICT_FAILURES === "true") {
+              console.log(`::error::${f.length} model page(s) failed to scrape and STRICT_FAILURES is true.`);
+              process.exit(1);
+            }
+          '
+
+      - name: Commit if anything changed
         run: |
           git config user.name  "region-bot"
           git config user.email "region-bot@users.noreply.github.com"
-          git add regions.json
+          git add models.json regions.json artifact-models.json
           # --cached compares against the last commit, which also works the very
-          # first time when regions.json has never been committed before.
+          # first time when the files have never been committed before.
           if git diff --cached --quiet; then
-            echo "regions.json is unchanged - nothing to commit."
+            echo "Nothing changed - nothing to commit."
           else
-            MSG=$(head -c 200 changes.txt 2>/dev/null | tr '\n' ' ')
+            MSG=$(cat promotions.txt changes.txt 2>/dev/null | head -c 200 | tr '\n' ' ')
             git commit -m "Region matrix update: ${MSG:-first run}"
             git push
             echo "Committed."
