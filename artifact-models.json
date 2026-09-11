@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-09T05:07:15.011Z",
+  "generatedAt": "2026-09-11T05:07:27.501Z",
   "provenance": {
-    "regionsUpdated": "2026-09-09",
+    "regionsUpdated": "2026-09-11",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-09-09T05:05:57.995Z"
+    "fetchedAt": "2026-09-11T05:06:10.008Z"
   },
   "counts": {
     "exposed": 20,
@@ -293,6 +293,7 @@
         "asia-northeast1",
         "asia-south1",
         "asia-southeast1",
+        "australia-southeast1",
         "eu",
         "europe-west2",
         "europe-west3",
@@ -651,32 +652,6 @@
       "reason": "preview or experimental — never exposed"
     },
     {
-      "id": "gemini-3.5-transcribe-live-preview",
-      "name": "Gemini 3.5 Transcribe Live Preview",
-      "modelType": "TEXT_GENERATION",
-      "capabilities": [
-        {
-          "inputModalities": [
-            "TEXT",
-            "IMAGE",
-            "AUDIO",
-            "VIDEO",
-            "FILE"
-          ],
-          "outputModalities": [
-            "TEXT"
-          ]
-        }
-      ],
-      "capabilitySource": "derived",
-      "regions": [
-        "global"
-      ],
-      "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-transcribe",
-      "reason": "preview or experimental — never exposed"
-    },
-    {
       "id": "gemini-3-flash-preview",
       "name": "Gemini 3 Flash Preview",
       "modelType": "TEXT_GENERATION",
@@ -700,7 +675,32 @@
       ],
       "status": "new",
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
-      "deprecationNote": "Caution: gemini-3-flash-preview is deprecated.",
+      "reason": "preview or experimental — never exposed"
+    },
+    {
+      "id": "gemini-3.5-transcribe-live-preview",
+      "name": "Gemini 3.5 Transcribe Live Preview",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "IMAGE",
+            "AUDIO",
+            "VIDEO",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "derived",
+      "regions": [
+        "global"
+      ],
+      "status": "new",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-transcribe",
       "reason": "preview or experimental — never exposed"
     },
     {
