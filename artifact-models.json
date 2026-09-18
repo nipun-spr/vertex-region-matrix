@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-16T05:07:11.591Z",
+  "generatedAt": "2026-09-18T05:07:26.334Z",
   "provenance": {
-    "regionsUpdated": "2026-09-16",
+    "regionsUpdated": "2026-09-18",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-09-16T05:05:57.759Z"
+    "fetchedAt": "2026-09-18T05:06:12.812Z"
   },
   "counts": {
-    "exposed": 20,
+    "exposed": 21,
     "excludedPreview": 5,
     "statusNew": 3,
     "failures": 3
@@ -93,7 +93,8 @@
         "us-west4"
       ],
       "status": "known",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-flash-image"
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-flash-image",
+      "deprecationNote": "Deprecated: Gemini 2."
     },
     {
       "id": "gemini-2.5-flash-lite",
@@ -413,6 +414,32 @@
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-flash"
     },
     {
+      "id": "gemini-3.8-flash-cyber",
+      "name": "Gemini 3.8 Flash Cyber",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "IMAGE",
+            "AUDIO",
+            "VIDEO",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "derived",
+      "regions": [
+        "global",
+        "us"
+      ],
+      "status": "known",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-flash-cyber"
+    },
+    {
       "id": "gemini-embedding-2",
       "name": "Gemini Embedding 2",
       "modelType": "EMBEDDING",
@@ -626,6 +653,32 @@
       "reason": "preview or experimental — never exposed"
     },
     {
+      "id": "gemini-3.5-transcribe-live-preview",
+      "name": "Gemini 3.5 Transcribe Live Preview",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "IMAGE",
+            "AUDIO",
+            "VIDEO",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "derived",
+      "regions": [
+        "global"
+      ],
+      "status": "new",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-transcribe",
+      "reason": "preview or experimental — never exposed"
+    },
+    {
       "id": "gemini-3.5-live-translate-preview",
       "name": "Gemini 3.5 Live Translate Preview",
       "modelType": "TEXT_GENERATION",
@@ -675,32 +728,6 @@
       ],
       "status": "new",
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
-      "reason": "preview or experimental — never exposed"
-    },
-    {
-      "id": "gemini-3.5-transcribe-live-preview",
-      "name": "Gemini 3.5 Transcribe Live Preview",
-      "modelType": "TEXT_GENERATION",
-      "capabilities": [
-        {
-          "inputModalities": [
-            "TEXT",
-            "IMAGE",
-            "AUDIO",
-            "VIDEO",
-            "FILE"
-          ],
-          "outputModalities": [
-            "TEXT"
-          ]
-        }
-      ],
-      "capabilitySource": "derived",
-      "regions": [
-        "global"
-      ],
-      "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-transcribe",
       "reason": "preview or experimental — never exposed"
     },
     {
