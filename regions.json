@@ -1,14 +1,32 @@
 {
-  "fetchedAt": "2026-09-18T05:06:12.812Z",
+  "fetchedAt": "2026-09-21T05:06:53.028Z",
   "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
   "models": {
-    "gemini-3.6-flash": {
+    "gemini-3.5-flash": {
+      "regions": [
+        "asia-northeast1",
+        "asia-south1",
+        "asia-southeast1",
+        "australia-southeast1",
+        "eu",
+        "europe-west2",
+        "europe-west3",
+        "global",
+        "northamerica-northeast1",
+        "us"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-flash",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known"
+    },
+    "gemini-3.7-flash": {
       "regions": [
         "eu",
         "global",
         "us"
       ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-6-flash",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-7-flash",
       "confidence": "high",
       "readFrom": "page",
       "status": "known"
@@ -24,13 +42,13 @@
       "readFrom": "page",
       "status": "known"
     },
-    "gemini-3.7-flash": {
+    "gemini-3.6-flash": {
       "regions": [
         "eu",
         "global",
         "us"
       ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-7-flash",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-6-flash",
       "confidence": "high",
       "readFrom": "page",
       "status": "known"
@@ -57,29 +75,20 @@
       "readFrom": "page",
       "status": "known"
     },
-    "gemini-3.5-flash": {
-      "regions": [
-        "asia-northeast1",
-        "asia-south1",
-        "asia-southeast1",
-        "australia-southeast1",
-        "eu",
-        "europe-west2",
-        "europe-west3",
-        "global",
-        "northamerica-northeast1",
-        "us"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-flash",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known"
-    },
     "gemini-3.1-flash-lite-image": {
       "regions": [
         "global"
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-flash-lite-image",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known"
+    },
+    "gemini-3-pro-image": {
+      "regions": [
+        "global"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-pro-image",
       "confidence": "high",
       "readFrom": "page",
       "status": "known"
@@ -105,47 +114,6 @@
         "us-west4"
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-pro",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known"
-    },
-    "gemini-2.5-flash": {
-      "regions": [
-        "asia-northeast1",
-        "asia-northeast3",
-        "asia-south1",
-        "asia-southeast1",
-        "australia-southeast1",
-        "europe-central2",
-        "europe-north1",
-        "europe-southwest1",
-        "europe-west1",
-        "europe-west2",
-        "europe-west3",
-        "europe-west4",
-        "europe-west8",
-        "europe-west9",
-        "global",
-        "northamerica-northeast1",
-        "southamerica-east1",
-        "us-central1",
-        "us-east1",
-        "us-east4",
-        "us-east5",
-        "us-south1",
-        "us-west1",
-        "us-west4"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-flash",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known"
-    },
-    "gemini-3-pro-image": {
-      "regions": [
-        "global"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-pro-image",
       "confidence": "high",
       "readFrom": "page",
       "status": "known"
@@ -205,6 +173,38 @@
       "status": "known",
       "deprecationNote": "Deprecated: Gemini 2."
     },
+    "gemini-2.5-flash": {
+      "regions": [
+        "asia-northeast1",
+        "asia-northeast3",
+        "asia-south1",
+        "asia-southeast1",
+        "australia-southeast1",
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west2",
+        "europe-west3",
+        "europe-west4",
+        "europe-west8",
+        "europe-west9",
+        "global",
+        "northamerica-northeast1",
+        "southamerica-east1",
+        "us-central1",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-south1",
+        "us-west1",
+        "us-west4"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-flash",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known"
+    },
     "gemini-3.8-flash": {
       "regions": [
         "eu",
@@ -216,13 +216,14 @@
       "readFrom": "page",
       "status": "known"
     },
-    "veo-3.1-fast-generate-001": {
+    "gemini-3.8-flash-cyber": {
       "regions": [
-        "us-central1"
+        "global",
+        "us"
       ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/veo/3-1-generate#3.1-fast-generate-001",
-      "confidence": "low",
-      "readFrom": "whole page (section had none)",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-flash-cyber",
+      "confidence": "high",
+      "readFrom": "page",
       "status": "known"
     },
     "veo-3.1-generate-001": {
@@ -230,6 +231,15 @@
         "us-central1"
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/veo/3-1-generate#3.1-generate-001",
+      "confidence": "low",
+      "readFrom": "whole page (section had none)",
+      "status": "known"
+    },
+    "veo-3.1-fast-generate-001": {
+      "regions": [
+        "us-central1"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/veo/3-1-generate#3.1-fast-generate-001",
       "confidence": "low",
       "readFrom": "whole page (section had none)",
       "status": "known"
@@ -269,18 +279,18 @@
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro",
       "status": "new"
     },
-    "gemini-3.5-transcribe-live-preview": {
-      "regions": [
-        "global"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-transcribe",
-      "status": "new"
-    },
     "gemini-3.5-live-translate-preview": {
       "regions": [
         "global"
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-live-translate",
+      "status": "new"
+    },
+    "gemini-3.5-transcribe-live-preview": {
+      "regions": [
+        "global"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-transcribe",
       "status": "new"
     },
     "gemini-3-flash-preview": {
@@ -290,28 +300,12 @@
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
       "status": "new"
     },
-    "gemini-3.8-flash-cyber": {
-      "regions": [
-        "global",
-        "us"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-flash-cyber",
-      "status": "known"
-    },
     "gemini-omni-1.1-flash-preview": {
       "regions": [
         "global"
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/omni-1-1-flash",
       "status": "new"
-    },
-    "veo-3.0-generate-001": {
-      "regions": [
-        "us-central1"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/veo/3-0-generate",
-      "status": "new",
-      "deprecationNote": "Caution: The following table describes image generation endpoints that are deprecated and their replacements."
     },
     "virtual-try-on-001": {
       "regions": [
@@ -335,6 +329,14 @@
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/vto/virtual-try-on-001",
       "status": "new"
+    },
+    "veo-3.0-generate-001": {
+      "regions": [
+        "us-central1"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/veo/3-0-generate",
+      "status": "new",
+      "deprecationNote": "Caution: The following table describes image generation endpoints that are deprecated and their replacements."
     }
   },
   "failures": [
@@ -357,12 +359,11 @@
   "discovered": [
     "gemini-live-2.5-flash-native-audio",
     "gemini-3.1-pro-preview-customtools",
-    "gemini-3.5-transcribe-live-preview",
     "gemini-3.5-live-translate-preview",
+    "gemini-3.5-transcribe-live-preview",
     "gemini-3-flash-preview",
-    "gemini-3.8-flash-cyber",
     "gemini-omni-1.1-flash-preview",
-    "veo-3.0-generate-001",
-    "virtual-try-on-001"
+    "virtual-try-on-001",
+    "veo-3.0-generate-001"
   ]
 }
