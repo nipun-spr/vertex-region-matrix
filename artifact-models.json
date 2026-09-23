@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-21T05:08:13.828Z",
+  "generatedAt": "2026-09-23T05:07:09.011Z",
   "provenance": {
-    "regionsUpdated": "2026-09-21",
+    "regionsUpdated": "2026-09-23",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-09-21T05:06:53.028Z"
+    "fetchedAt": "2026-09-23T05:05:53.982Z"
   },
   "counts": {
     "exposed": 21,
