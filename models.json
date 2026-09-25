@@ -79,6 +79,9 @@
     },
     "gemini-3.8-flash-cyber": {
       "path": "gemini/3-8-flash-cyber"
+    },
+    "gemini-3.8-live": {
+      "path": "gemini/3-8-live"
     }
   }
 }
