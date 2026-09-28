@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-25T05:07:13.026Z",
+  "generatedAt": "2026-09-28T11:24:02.097Z",
   "provenance": {
-    "regionsUpdated": "2026-09-25",
+    "regionsUpdated": "2026-09-28",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-09-25T05:05:55.431Z"
+    "fetchedAt": "2026-09-28T11:22:46.370Z"
   },
   "counts": {
     "exposed": 22,
@@ -683,32 +683,6 @@
       "reason": "preview or experimental — never exposed"
     },
     {
-      "id": "gemini-3-flash-preview",
-      "name": "Gemini 3 Flash Preview",
-      "modelType": "TEXT_GENERATION",
-      "capabilities": [
-        {
-          "inputModalities": [
-            "TEXT",
-            "IMAGE",
-            "AUDIO",
-            "VIDEO",
-            "FILE"
-          ],
-          "outputModalities": [
-            "TEXT"
-          ]
-        }
-      ],
-      "capabilitySource": "derived",
-      "regions": [
-        "global"
-      ],
-      "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
-      "reason": "preview or experimental — never exposed"
-    },
-    {
       "id": "gemini-3.5-live-translate-preview",
       "name": "Gemini 3.5 Live Translate Preview",
       "modelType": "TEXT_GENERATION",
@@ -785,17 +759,43 @@
       "status": "new",
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/omni-1-1-flash",
       "reason": "preview or experimental — never exposed"
+    },
+    {
+      "id": "gemini-3-flash-preview",
+      "name": "Gemini 3 Flash Preview",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "IMAGE",
+            "AUDIO",
+            "VIDEO",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "derived",
+      "regions": [
+        "global"
+      ],
+      "status": "new",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
+      "reason": "preview or experimental — never exposed"
     }
   ],
   "failures": [
     {
-      "model": "text-embedding-005",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-embedding-005",
+      "model": "gemini-embedding-001",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/embedding",
       "error": "HTTP 404"
     },
     {
-      "model": "gemini-embedding-001",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/embedding",
+      "model": "text-embedding-005",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-embedding-005",
       "error": "HTTP 404"
     },
     {
