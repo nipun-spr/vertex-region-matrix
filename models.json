@@ -82,6 +82,12 @@
     },
     "gemini-3.8-live": {
       "path": "gemini/3-8-live"
+    },
+    "gemini-3.8-flash-tts": {
+      "path": "gemini/3-8-flash-tts"
+    },
+    "gemini-3.8-flash-lite-tts": {
+      "path": "gemini/3-8-flash-lite-tts"
     }
   }
 }
