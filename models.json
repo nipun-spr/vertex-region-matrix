@@ -88,6 +88,9 @@
     },
     "gemini-3.8-flash-lite-tts": {
       "path": "gemini/3-8-flash-lite-tts"
+    },
+    "gemini-3.5-transcribe-live": {
+      "path": "gemini/3-5-transcribe"
     }
   }
 }
