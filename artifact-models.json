@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-07T11:29:20.093Z",
+  "generatedAt": "2026-10-09T11:38:09.579Z",
   "provenance": {
-    "regionsUpdated": "2026-10-07",
+    "regionsUpdated": "2026-10-09",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-10-07T11:28:00.835Z"
+    "fetchedAt": "2026-10-09T11:36:49.632Z"
   },
   "counts": {
     "exposed": 27,
@@ -797,8 +797,8 @@
   ],
   "excluded": [
     {
-      "id": "gemini-3.1-pro-preview-customtools",
-      "name": "Gemini 3.1 Pro Preview Customtools",
+      "id": "gemini-3-flash-preview",
+      "name": "Gemini 3 Flash Preview",
       "modelType": "TEXT_GENERATION",
       "capabilities": [
         {
@@ -819,7 +819,7 @@
         "global"
       ],
       "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
       "reason": "preview or experimental — never exposed"
     },
     {
@@ -849,8 +849,8 @@
       "reason": "preview or experimental — never exposed"
     },
     {
-      "id": "gemini-3-flash-preview",
-      "name": "Gemini 3 Flash Preview",
+      "id": "gemini-3.1-pro-preview-customtools",
+      "name": "Gemini 3.1 Pro Preview Customtools",
       "modelType": "TEXT_GENERATION",
       "capabilities": [
         {
@@ -871,7 +871,7 @@
         "global"
       ],
       "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro",
       "reason": "preview or experimental — never exposed"
     },
     {
@@ -903,13 +903,13 @@
   ],
   "failures": [
     {
-      "model": "gemini-embedding-001",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/embedding",
+      "model": "text-embedding-005",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-embedding-005",
       "error": "HTTP 404"
     },
     {
-      "model": "text-embedding-005",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-embedding-005",
+      "model": "gemini-embedding-001",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/embedding",
       "error": "HTTP 404"
     },
     {
