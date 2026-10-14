@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-12T12:40:17.888Z",
+  "generatedAt": "2026-10-14T09:53:51.664Z",
   "provenance": {
-    "regionsUpdated": "2026-10-12",
+    "regionsUpdated": "2026-10-14",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-10-12T12:39:02.202Z"
+    "fetchedAt": "2026-10-14T09:52:33.688Z"
   },
   "counts": {
-    "exposed": 27,
+    "exposed": 28,
     "excludedPreview": 4,
     "statusNew": 5,
     "failures": 3
@@ -553,6 +553,33 @@
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-live"
     },
     {
+      "id": "gemini-4-argon",
+      "name": "Gemini 4 Argon",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "IMAGE",
+            "AUDIO",
+            "VIDEO",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "derived",
+      "regions": [
+        "eu",
+        "global",
+        "us"
+      ],
+      "status": "known",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/4-argon"
+    },
+    {
       "id": "gemini-embedding-001",
       "name": "Gemini Embedding 001",
       "modelType": "TEXT_GENERATION",
@@ -797,6 +824,32 @@
   ],
   "excluded": [
     {
+      "id": "gemini-3.1-pro-preview-customtools",
+      "name": "Gemini 3.1 Pro Preview Customtools",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "IMAGE",
+            "AUDIO",
+            "VIDEO",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "derived",
+      "regions": [
+        "global"
+      ],
+      "status": "new",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro",
+      "reason": "preview or experimental — never exposed"
+    },
+    {
       "id": "gemini-3.5-live-translate-preview",
       "name": "Gemini 3.5 Live Translate Preview",
       "modelType": "TEXT_GENERATION",
@@ -846,32 +899,6 @@
       ],
       "status": "new",
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
-      "reason": "preview or experimental — never exposed"
-    },
-    {
-      "id": "gemini-3.1-pro-preview-customtools",
-      "name": "Gemini 3.1 Pro Preview Customtools",
-      "modelType": "TEXT_GENERATION",
-      "capabilities": [
-        {
-          "inputModalities": [
-            "TEXT",
-            "IMAGE",
-            "AUDIO",
-            "VIDEO",
-            "FILE"
-          ],
-          "outputModalities": [
-            "TEXT"
-          ]
-        }
-      ],
-      "capabilitySource": "derived",
-      "regions": [
-        "global"
-      ],
-      "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro",
       "reason": "preview or experimental — never exposed"
     },
     {
