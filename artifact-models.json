@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-10-21T09:48:08.649Z",
+  "generatedAt": "2026-10-23T09:43:41.056Z",
   "provenance": {
-    "regionsUpdated": "2026-10-21",
+    "regionsUpdated": "2026-10-23",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-10-21T09:46:47.053Z"
+    "fetchedAt": "2026-10-23T09:42:25.675Z"
   },
   "counts": {
-    "exposed": 28,
+    "exposed": 27,
     "excludedPreview": 4,
-    "statusNew": 5,
+    "statusNew": 4,
     "failures": 3
   },
   "models": [
@@ -699,29 +699,6 @@
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/nano-banana-2-1"
     },
     {
-      "id": "veo-3.0-generate-001",
-      "name": "Veo 3.0 Generate 001",
-      "modelType": "VIDEO_GENERATION",
-      "capabilities": [
-        {
-          "inputModalities": [
-            "TEXT",
-            "IMAGE"
-          ],
-          "outputModalities": [
-            "VIDEO"
-          ]
-        }
-      ],
-      "capabilitySource": "derived",
-      "regions": [
-        "us-central1"
-      ],
-      "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/veo/3-0-generate",
-      "deprecationNote": "Caution: The following table describes image generation endpoints that are deprecated and their replacements."
-    },
-    {
       "id": "veo-3.1-fast-generate-001",
       "name": "Veo 3.1 Fast Generate 001",
       "modelType": "VIDEO_GENERATION",
@@ -856,6 +833,32 @@
       "reason": "preview or experimental — never exposed"
     },
     {
+      "id": "gemini-3-flash-preview",
+      "name": "Gemini 3 Flash Preview",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "IMAGE",
+            "AUDIO",
+            "VIDEO",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "derived",
+      "regions": [
+        "global"
+      ],
+      "status": "new",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
+      "reason": "preview or experimental — never exposed"
+    },
+    {
       "id": "gemini-3.5-live-translate-preview",
       "name": "Gemini 3.5 Live Translate Preview",
       "modelType": "TEXT_GENERATION",
@@ -906,38 +909,12 @@
       "status": "new",
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/omni-1-1-flash",
       "reason": "preview or experimental — never exposed"
-    },
-    {
-      "id": "gemini-3-flash-preview",
-      "name": "Gemini 3 Flash Preview",
-      "modelType": "TEXT_GENERATION",
-      "capabilities": [
-        {
-          "inputModalities": [
-            "TEXT",
-            "IMAGE",
-            "AUDIO",
-            "VIDEO",
-            "FILE"
-          ],
-          "outputModalities": [
-            "TEXT"
-          ]
-        }
-      ],
-      "capabilitySource": "derived",
-      "regions": [
-        "global"
-      ],
-      "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
-      "reason": "preview or experimental — never exposed"
     }
   ],
   "failures": [
     {
-      "model": "text-embedding-005",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-embedding-005",
+      "model": "gemini-embedding-001",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/embedding",
       "error": "HTTP 404"
     },
     {
@@ -946,8 +923,8 @@
       "error": "HTTP 404"
     },
     {
-      "model": "gemini-embedding-001",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/embedding",
+      "model": "text-embedding-005",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-embedding-005",
       "error": "HTTP 404"
     }
   ]
