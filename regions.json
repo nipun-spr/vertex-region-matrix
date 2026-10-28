@@ -1,31 +1,18 @@
 {
-  "fetchedAt": "2026-10-26T10:45:55.985Z",
+  "fetchedAt": "2026-10-28T10:56:03.894Z",
   "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
   "models": {
-    "gemini-3.5-flash-lite": {
-      "regions": [
-        "asia-south1",
-        "eu",
-        "global",
-        "us"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-flash-lite",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known",
-      "deprecationNote": "† Listed retirement dates refer to retirement of support in Gemini Enterprise Agent Platform."
-    },
-    "gemini-3.6-flash": {
+    "gemini-3.7-flash": {
       "regions": [
         "eu",
         "global",
         "us"
       ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-6-flash",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-7-flash",
       "confidence": "high",
       "readFrom": "page",
       "status": "known",
-      "deprecationNote": "6 Flash will be retired on November 19, 2026."
+      "deprecationNote": "7 Flash will be retired on January 28, 2027."
     },
     "gemini-3.5-flash": {
       "regions": [
@@ -46,17 +33,30 @@
       "status": "known",
       "deprecationNote": "† Listed retirement dates refer to retirement of support in Gemini Enterprise Agent Platform."
     },
-    "gemini-3.7-flash": {
+    "gemini-3.6-flash": {
       "regions": [
         "eu",
         "global",
         "us"
       ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-7-flash",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-6-flash",
       "confidence": "high",
       "readFrom": "page",
       "status": "known",
-      "deprecationNote": "7 Flash will be retired on January 28, 2027."
+      "deprecationNote": "6 Flash will be retired on November 19, 2026."
+    },
+    "gemini-3.5-flash-lite": {
+      "regions": [
+        "asia-south1",
+        "eu",
+        "global",
+        "us"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-flash-lite",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known",
+      "deprecationNote": "† Listed retirement dates refer to retirement of support in Gemini Enterprise Agent Platform."
     },
     "gemini-3.1-flash-lite": {
       "regions": [
@@ -65,18 +65,6 @@
         "us"
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-flash-lite",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known",
-      "deprecationNote": "† Listed retirement dates refer to retirement of support in Gemini Enterprise Agent Platform."
-    },
-    "gemini-3.1-flash-image": {
-      "regions": [
-        "eu",
-        "global",
-        "us"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-flash-image",
       "confidence": "high",
       "readFrom": "page",
       "status": "known",
@@ -92,11 +80,13 @@
       "status": "known",
       "deprecationNote": "† Listed retirement dates refer to retirement of support in Gemini Enterprise Agent Platform."
     },
-    "gemini-3-pro-image": {
+    "gemini-3.1-flash-image": {
       "regions": [
-        "global"
+        "eu",
+        "global",
+        "us"
       ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-pro-image",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-flash-image",
       "confidence": "high",
       "readFrom": "page",
       "status": "known",
@@ -128,6 +118,39 @@
       "status": "known",
       "deprecationNote": "Important: This model is being retired on October 20th, 2026."
     },
+    "gemini-3-pro-image": {
+      "regions": [
+        "global"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-pro-image",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known",
+      "deprecationNote": "† Listed retirement dates refer to retirement of support in Gemini Enterprise Agent Platform."
+    },
+    "gemini-2.5-flash-image": {
+      "regions": [
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west4",
+        "europe-west8",
+        "global",
+        "us-central1",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-south1",
+        "us-west1",
+        "us-west4"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-flash-image",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known",
+      "deprecationNote": "Deprecated: Gemini 2."
+    },
     "gemini-2.5-flash-lite": {
       "regions": [
         "europe-central2",
@@ -152,6 +175,34 @@
       "status": "known",
       "deprecationNote": "Important: This model is being retired on October 20th, 2026."
     },
+    "gemini-embedding-001": {
+      "regions": [
+        "europe-west1",
+        "europe-west4",
+        "global",
+        "us-central1",
+        "us-east1",
+        "us-east4",
+        "us-west1",
+        "us-west4"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/embeddings/batch-prediction-genai-embeddings",
+      "status": "new",
+      "inferred": {
+        "modelType": "TEXT_GENERATION",
+        "capabilities": [
+          {
+            "inputModalities": [
+              "TEXT",
+              "EMBEDDINGS"
+            ],
+            "outputModalities": [
+              "TEXT"
+            ]
+          }
+        ]
+      }
+    },
     "gemini-embedding-2": {
       "regions": [
         "global"
@@ -160,29 +211,6 @@
       "confidence": "high",
       "readFrom": "page",
       "status": "known"
-    },
-    "gemini-2.5-flash-image": {
-      "regions": [
-        "europe-central2",
-        "europe-north1",
-        "europe-southwest1",
-        "europe-west1",
-        "europe-west4",
-        "europe-west8",
-        "global",
-        "us-central1",
-        "us-east1",
-        "us-east4",
-        "us-east5",
-        "us-south1",
-        "us-west1",
-        "us-west4"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-flash-image",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known",
-      "deprecationNote": "Deprecated: Gemini 2."
     },
     "gemini-2.5-flash": {
       "regions": [
@@ -217,34 +245,6 @@
       "status": "known",
       "deprecationNote": "Important: This model is being retired on October 20th, 2026."
     },
-    "gemini-embedding-001": {
-      "regions": [
-        "europe-west1",
-        "europe-west4",
-        "global",
-        "us-central1",
-        "us-east1",
-        "us-east4",
-        "us-west1",
-        "us-west4"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/embeddings/batch-prediction-genai-embeddings",
-      "status": "new",
-      "inferred": {
-        "modelType": "TEXT_GENERATION",
-        "capabilities": [
-          {
-            "inputModalities": [
-              "TEXT",
-              "EMBEDDINGS"
-            ],
-            "outputModalities": [
-              "TEXT"
-            ]
-          }
-        ]
-      }
-    },
     "gemini-3.8-flash": {
       "regions": [
         "eu",
@@ -257,16 +257,6 @@
       "status": "known",
       "deprecationNote": "† Listed retirement dates refer to retirement of support in Gemini Enterprise Agent Platform."
     },
-    "gemini-3.8-flash-cyber": {
-      "regions": [
-        "global",
-        "us"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-flash-cyber",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known"
-    },
     "veo-3.1-lite-generate-001": {
       "regions": [
         "us-central1"
@@ -277,20 +267,30 @@
       "status": "known",
       "deprecationNote": "† Listed retirement dates refer to retirement of support in Gemini Enterprise Agent Platform."
     },
-    "veo-3.1-fast-generate-001": {
-      "regions": [
-        "us-central1"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/veo/3-1-generate#3.1-fast-generate-001",
-      "confidence": "low",
-      "readFrom": "whole page (section had none)",
-      "status": "known"
-    },
     "veo-3.1-generate-001": {
       "regions": [
         "us-central1"
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/veo/3-1-generate#3.1-generate-001",
+      "confidence": "low",
+      "readFrom": "whole page (section had none)",
+      "status": "known"
+    },
+    "gemini-3.8-flash-cyber": {
+      "regions": [
+        "global",
+        "us"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-flash-cyber",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known"
+    },
+    "veo-3.1-fast-generate-001": {
+      "regions": [
+        "us-central1"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/veo/3-1-generate#3.1-fast-generate-001",
       "confidence": "low",
       "readFrom": "whole page (section had none)",
       "status": "known"
@@ -307,6 +307,15 @@
       "status": "known",
       "deprecationNote": "† Listed retirement dates refer to retirement of support in Gemini Enterprise Agent Platform."
     },
+    "gemini-3.8-flash-lite-tts": {
+      "regions": [
+        "global"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-flash-lite-tts",
+      "confidence": "high",
+      "readFrom": "page",
+      "status": "known"
+    },
     "gemini-3.8-flash-tts": {
       "regions": [
         "global"
@@ -316,11 +325,11 @@
       "readFrom": "page",
       "status": "known"
     },
-    "gemini-3.8-flash-lite-tts": {
+    "gemini-3.5-transcribe-live": {
       "regions": [
         "global"
       ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-flash-lite-tts",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-transcribe",
       "confidence": "high",
       "readFrom": "page",
       "status": "known"
@@ -339,14 +348,12 @@
       "status": "known",
       "deprecationNote": "† Listed retirement dates refer to retirement of support in Gemini Enterprise Agent Platform."
     },
-    "gemini-3.5-transcribe-live": {
+    "gemini-3.5-live-translate-preview": {
       "regions": [
         "global"
       ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-transcribe",
-      "confidence": "high",
-      "readFrom": "page",
-      "status": "known"
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-live-translate",
+      "status": "new"
     },
     "gemini-live-2.5-flash-native-audio": {
       "regions": [
@@ -375,18 +382,18 @@
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro",
       "status": "new"
     },
+    "gemini-3-flash-preview": {
+      "regions": [
+        "global"
+      ],
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
+      "status": "new"
+    },
     "gemini-nano-banana-2.1": {
       "regions": [
         "global"
       ],
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/nano-banana-2-1",
-      "status": "new"
-    },
-    "gemini-3.5-live-translate-preview": {
-      "regions": [
-        "global"
-      ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-live-translate",
       "status": "new"
     },
     "gemini-omni-1.1-flash-preview": {
@@ -396,11 +403,11 @@
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/omni-1-1-flash",
       "status": "new"
     },
-    "gemini-3-flash-preview": {
+    "gemini-robotics-er-2-preview": {
       "regions": [
         "global"
       ],
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/robotics-er-2",
       "status": "new"
     },
     "virtual-try-on-001": {
@@ -446,12 +453,13 @@
     }
   ],
   "discovered": [
+    "gemini-3.5-live-translate-preview",
     "gemini-live-2.5-flash-native-audio",
     "gemini-3.1-pro-preview-customtools",
-    "gemini-nano-banana-2.1",
-    "gemini-3.5-live-translate-preview",
-    "gemini-omni-1.1-flash-preview",
     "gemini-3-flash-preview",
+    "gemini-nano-banana-2.1",
+    "gemini-omni-1.1-flash-preview",
+    "gemini-robotics-er-2-preview",
     "virtual-try-on-001"
   ]
 }

@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-26T10:47:16.441Z",
+  "generatedAt": "2026-10-28T10:57:20.302Z",
   "provenance": {
-    "regionsUpdated": "2026-10-26",
+    "regionsUpdated": "2026-10-28",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-10-26T10:45:55.985Z"
+    "fetchedAt": "2026-10-28T10:56:03.894Z"
   },
   "counts": {
     "exposed": 27,
-    "excludedPreview": 4,
+    "excludedPreview": 5,
     "statusNew": 4,
     "failures": 3
   },
@@ -807,6 +807,32 @@
   ],
   "excluded": [
     {
+      "id": "gemini-3.5-live-translate-preview",
+      "name": "Gemini 3.5 Live Translate Preview",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "IMAGE",
+            "AUDIO",
+            "VIDEO",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "derived",
+      "regions": [
+        "global"
+      ],
+      "status": "new",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-live-translate",
+      "reason": "preview or experimental — never exposed"
+    },
+    {
       "id": "gemini-3.1-pro-preview-customtools",
       "name": "Gemini 3.1 Pro Preview Customtools",
       "modelType": "TEXT_GENERATION",
@@ -833,8 +859,8 @@
       "reason": "preview or experimental — never exposed"
     },
     {
-      "id": "gemini-3.5-live-translate-preview",
-      "name": "Gemini 3.5 Live Translate Preview",
+      "id": "gemini-3-flash-preview",
+      "name": "Gemini 3 Flash Preview",
       "modelType": "TEXT_GENERATION",
       "capabilities": [
         {
@@ -855,7 +881,7 @@
         "global"
       ],
       "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-live-translate",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
       "reason": "preview or experimental — never exposed"
     },
     {
@@ -885,8 +911,8 @@
       "reason": "preview or experimental — never exposed"
     },
     {
-      "id": "gemini-3-flash-preview",
-      "name": "Gemini 3 Flash Preview",
+      "id": "gemini-robotics-er-2-preview",
+      "name": "Gemini Robotics Er 2 Preview",
       "modelType": "TEXT_GENERATION",
       "capabilities": [
         {
@@ -907,7 +933,7 @@
         "global"
       ],
       "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/robotics-er-2",
       "reason": "preview or experimental — never exposed"
     }
   ],
