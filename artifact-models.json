@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-30T11:09:38.363Z",
+  "generatedAt": "2026-11-02T13:01:47.657Z",
   "provenance": {
-    "regionsUpdated": "2026-10-30",
+    "regionsUpdated": "2026-11-02",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-10-30T11:08:19.724Z"
+    "fetchedAt": "2026-11-02T13:00:30.181Z"
   },
   "counts": {
     "exposed": 27,
@@ -837,32 +837,6 @@
       "reason": "preview or experimental — never exposed"
     },
     {
-      "id": "gemini-3.5-live-translate-preview",
-      "name": "Gemini 3.5 Live Translate Preview",
-      "modelType": "TEXT_GENERATION",
-      "capabilities": [
-        {
-          "inputModalities": [
-            "TEXT",
-            "IMAGE",
-            "AUDIO",
-            "VIDEO",
-            "FILE"
-          ],
-          "outputModalities": [
-            "TEXT"
-          ]
-        }
-      ],
-      "capabilitySource": "derived",
-      "regions": [
-        "global"
-      ],
-      "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-live-translate",
-      "reason": "preview or experimental — never exposed"
-    },
-    {
       "id": "gemini-3-flash-preview",
       "name": "Gemini 3 Flash Preview",
       "modelType": "TEXT_GENERATION",
@@ -886,6 +860,32 @@
       ],
       "status": "new",
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-flash",
+      "reason": "preview or experimental — never exposed"
+    },
+    {
+      "id": "gemini-3.5-live-translate-preview",
+      "name": "Gemini 3.5 Live Translate Preview",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "IMAGE",
+            "AUDIO",
+            "VIDEO",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "derived",
+      "regions": [
+        "global"
+      ],
+      "status": "new",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-live-translate",
       "reason": "preview or experimental — never exposed"
     },
     {
