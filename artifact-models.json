@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-04T12:45:12.494Z",
+  "generatedAt": "2026-11-06T12:40:54.994Z",
   "provenance": {
-    "regionsUpdated": "2026-11-04",
+    "regionsUpdated": "2026-11-06",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-11-04T12:43:52.324Z"
+    "fetchedAt": "2026-11-06T12:39:35.646Z"
   },
   "counts": {
-    "exposed": 27,
+    "exposed": 28,
     "excludedPreview": 5,
-    "statusNew": 4,
+    "statusNew": 5,
     "failures": 3
   },
   "models": [
@@ -703,6 +703,32 @@
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/nano-banana-2-1"
     },
     {
+      "id": "gemini-omni-1.2-flash",
+      "name": "Gemini Omni 1.2 Flash",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "IMAGE",
+            "AUDIO",
+            "VIDEO",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "derived",
+      "regions": [
+        "global"
+      ],
+      "status": "new",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/omni-1-2-flash",
+      "deprecationNote": "† Listed retirement dates refer to retirement of support in Gemini Enterprise Agent Platform."
+    },
+    {
       "id": "veo-3.1-fast-generate-001",
       "name": "Veo 3.1 Fast Generate 001",
       "modelType": "VIDEO_GENERATION",
@@ -889,32 +915,6 @@
       "reason": "preview or experimental — never exposed"
     },
     {
-      "id": "gemini-robotics-er-2-preview",
-      "name": "Gemini Robotics Er 2 Preview",
-      "modelType": "TEXT_GENERATION",
-      "capabilities": [
-        {
-          "inputModalities": [
-            "TEXT",
-            "IMAGE",
-            "AUDIO",
-            "VIDEO",
-            "FILE"
-          ],
-          "outputModalities": [
-            "TEXT"
-          ]
-        }
-      ],
-      "capabilitySource": "derived",
-      "regions": [
-        "global"
-      ],
-      "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/robotics-er-2",
-      "reason": "preview or experimental — never exposed"
-    },
-    {
       "id": "gemini-omni-1.1-flash-preview",
       "name": "Gemini Omni 1.1 Flash Preview",
       "modelType": "TEXT_GENERATION",
@@ -938,6 +938,32 @@
       ],
       "status": "new",
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/omni-1-1-flash",
+      "reason": "preview or experimental — never exposed"
+    },
+    {
+      "id": "gemini-robotics-er-2-preview",
+      "name": "Gemini Robotics Er 2 Preview",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "IMAGE",
+            "AUDIO",
+            "VIDEO",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "derived",
+      "regions": [
+        "global"
+      ],
+      "status": "new",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/robotics-er-2",
       "reason": "preview or experimental — never exposed"
     }
   ],
