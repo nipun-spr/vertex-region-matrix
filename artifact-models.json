@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-06T12:40:54.994Z",
+  "generatedAt": "2026-11-09T13:33:05.175Z",
   "provenance": {
-    "regionsUpdated": "2026-11-06",
+    "regionsUpdated": "2026-11-09",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-11-06T12:39:35.646Z"
+    "fetchedAt": "2026-11-09T13:31:46.032Z"
   },
   "counts": {
     "exposed": 28,
@@ -725,8 +725,8 @@
         "global"
       ],
       "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/omni-1-2-flash",
-      "deprecationNote": "† Listed retirement dates refer to retirement of support in Gemini Enterprise Agent Platform."
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/omni-flash-preview",
+      "deprecationNote": "Deprecated: Gemini Omni Flash (gemini-omni-flash-preview) is deprecated as of November 6, 2026."
     },
     {
       "id": "veo-3.1-fast-generate-001",
@@ -837,32 +837,6 @@
   ],
   "excluded": [
     {
-      "id": "gemini-3.1-pro-preview-customtools",
-      "name": "Gemini 3.1 Pro Preview Customtools",
-      "modelType": "TEXT_GENERATION",
-      "capabilities": [
-        {
-          "inputModalities": [
-            "TEXT",
-            "IMAGE",
-            "AUDIO",
-            "VIDEO",
-            "FILE"
-          ],
-          "outputModalities": [
-            "TEXT"
-          ]
-        }
-      ],
-      "capabilitySource": "derived",
-      "regions": [
-        "global"
-      ],
-      "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro",
-      "reason": "preview or experimental — never exposed"
-    },
-    {
       "id": "gemini-3.5-live-translate-preview",
       "name": "Gemini 3.5 Live Translate Preview",
       "modelType": "TEXT_GENERATION",
@@ -886,6 +860,32 @@
       ],
       "status": "new",
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-live-translate",
+      "reason": "preview or experimental — never exposed"
+    },
+    {
+      "id": "gemini-3.1-pro-preview-customtools",
+      "name": "Gemini 3.1 Pro Preview Customtools",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "IMAGE",
+            "AUDIO",
+            "VIDEO",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "derived",
+      "regions": [
+        "global"
+      ],
+      "status": "new",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro",
       "reason": "preview or experimental — never exposed"
     },
     {
@@ -938,6 +938,7 @@
       ],
       "status": "new",
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/omni-1-1-flash",
+      "deprecationNote": "Deprecated: Gemini Omni 1.",
       "reason": "preview or experimental — never exposed"
     },
     {
