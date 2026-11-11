@@ -94,6 +94,9 @@
     },
     "gemini-4-argon": {
       "path": "gemini/4-argon"
+    },
+    "gemini-4-carbon": {
+      "path": "gemini/4-carbon"
     }
   }
 }
