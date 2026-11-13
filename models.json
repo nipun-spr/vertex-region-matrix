@@ -97,6 +97,9 @@
     },
     "gemini-4-carbon": {
       "path": "gemini/4-carbon"
+    },
+    "gemini-4-hydrogen": {
+      "path": "gemini/4-hydrogen"
     }
   }
 }
