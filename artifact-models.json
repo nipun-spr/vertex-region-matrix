@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-16T13:18:20.897Z",
+  "generatedAt": "2026-11-18T13:38:03.586Z",
   "provenance": {
-    "regionsUpdated": "2026-11-16",
+    "regionsUpdated": "2026-11-18",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-11-16T13:17:06.323Z"
+    "fetchedAt": "2026-11-18T13:36:44.070Z"
   },
   "counts": {
     "exposed": 30,
@@ -1027,13 +1027,13 @@
       "error": "HTTP 404"
     },
     {
-      "model": "text-embedding-005",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-embedding-005",
+      "model": "text-multilingual-embedding-002",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-multilingual-embedding-002",
       "error": "HTTP 404"
     },
     {
-      "model": "text-multilingual-embedding-002",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-multilingual-embedding-002",
+      "model": "text-embedding-005",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-embedding-005",
       "error": "HTTP 404"
     }
   ]
