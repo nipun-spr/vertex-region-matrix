@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-18T13:38:03.586Z",
+  "generatedAt": "2026-11-20T13:47:11.915Z",
   "provenance": {
-    "regionsUpdated": "2026-11-18",
+    "regionsUpdated": "2026-11-20",
     "regionsSource": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/",
-    "fetchedAt": "2026-11-18T13:36:44.070Z"
+    "fetchedAt": "2026-11-20T13:45:55.102Z"
   },
   "counts": {
-    "exposed": 30,
+    "exposed": 31,
     "excludedPreview": 5,
     "statusNew": 5,
     "failures": 3
@@ -555,6 +555,7 @@
       ],
       "capabilitySource": "derived",
       "regions": [
+        "asia-south1",
         "eu",
         "us",
         "us-central1"
@@ -640,6 +641,30 @@
       ],
       "status": "known",
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/4-hydrogen"
+    },
+    {
+      "id": "gemini-4-neon",
+      "name": "Gemini 4 Neon",
+      "modelType": "TEXT_GENERATION",
+      "capabilities": [
+        {
+          "inputModalities": [
+            "TEXT",
+            "FILE"
+          ],
+          "outputModalities": [
+            "TEXT"
+          ]
+        }
+      ],
+      "capabilitySource": "scraped",
+      "regions": [
+        "eu",
+        "global",
+        "us"
+      ],
+      "status": "known",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/4-neon"
     },
     {
       "id": "gemini-embedding-001",
@@ -889,8 +914,8 @@
   ],
   "excluded": [
     {
-      "id": "gemini-3.5-live-translate-preview",
-      "name": "Gemini 3.5 Live Translate Preview",
+      "id": "gemini-3.1-pro-preview-customtools",
+      "name": "Gemini 3.1 Pro Preview Customtools",
       "modelType": "TEXT_GENERATION",
       "capabilities": [
         {
@@ -911,7 +936,7 @@
         "global"
       ],
       "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-live-translate",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro",
       "reason": "preview or experimental — never exposed"
     },
     {
@@ -941,8 +966,8 @@
       "reason": "preview or experimental — never exposed"
     },
     {
-      "id": "gemini-3.1-pro-preview-customtools",
-      "name": "Gemini 3.1 Pro Preview Customtools",
+      "id": "gemini-3.5-live-translate-preview",
+      "name": "Gemini 3.5 Live Translate Preview",
       "modelType": "TEXT_GENERATION",
       "capabilities": [
         {
@@ -963,7 +988,7 @@
         "global"
       ],
       "status": "new",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-live-translate",
       "reason": "preview or experimental — never exposed"
     },
     {
@@ -1027,13 +1052,13 @@
       "error": "HTTP 404"
     },
     {
-      "model": "text-multilingual-embedding-002",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-multilingual-embedding-002",
+      "model": "text-embedding-005",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-embedding-005",
       "error": "HTTP 404"
     },
     {
-      "model": "text-embedding-005",
-      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-embedding-005",
+      "model": "text-multilingual-embedding-002",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/text-multilingual-embedding-002",
       "error": "HTTP 404"
     }
   ]
